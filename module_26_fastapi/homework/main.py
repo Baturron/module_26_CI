@@ -18,7 +18,9 @@ def create_app(database_url: str = DATABASE_URL) -> FastAPI:
     async def lifespan(app: FastAPI) -> AsyncIterator[None]:
         engine = create_async_engine(database_url)
         try:
-            app.state.session_factory = async_sessionmaker(engine, expire_on_commit=False)
+            app.state.session_factory = async_sessionmaker(
+                engine, expire_on_commit=False
+            )
             async with engine.begin() as connection:
                 await connection.run_sync(models.Base.metadata.create_all)
             yield

@@ -22,4 +22,6 @@ class Recipe(Base):
     cooking_time_minutes: Mapped[int] = mapped_column(Integer, nullable=False)
     ingredients: Mapped[list[str]] = mapped_column(JSON, nullable=False)
     description: Mapped[str] = mapped_column(Text, nullable=False)
-    views: Mapped[int] = mapped_column(Integer, nullable=False, default=0, server_default="0")
+    views: Mapped[int] = mapped_column(
+        Integer, nullable=False, default=0, server_default="0"
+    )

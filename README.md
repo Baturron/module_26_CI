@@ -9,7 +9,7 @@
 Из корня репозитория установите зависимости и запустите сервер:
 
 ```bash
-python -m pip install -r module_26_fastapi/homework/requirements.txt
+python -m pip install -r requirements.txt
 uvicorn module_26_fastapi.homework.main:app --reload
 ```
 
@@ -101,5 +101,5 @@ uvicorn module_26_fastapi.homework.main:app --reload
 Тесты используют `TestClient` и отдельную временную SQLite-базу для каждого теста:
 
 ```bash
-pytest -q module_26_fastapi/homework/tests
+pytest -q tests
 ```

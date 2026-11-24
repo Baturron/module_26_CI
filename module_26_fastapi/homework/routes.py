@@ -7,7 +7,6 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from . import models, schemas
 from .database import get_session
 
-
 router = APIRouter()
 
 
@@ -25,7 +24,10 @@ router = APIRouter()
 async def list_recipes(
     session: AsyncSession = Depends(get_session),
 ) -> list[schemas.RecipeSummary]:
-    """Вернуть краткую информацию о рецептах, отсортированную по популярности и времени приготовления."""
+    """Вернуть краткую информацию о рецептах.
+
+    Результат отсортирован по популярности и времени приготовления.
+    """
     result = await session.execute(
         select(models.Recipe).order_by(
             models.Recipe.views.desc(),
@@ -33,7 +35,10 @@ async def list_recipes(
             models.Recipe.id.asc(),
         )
     )
-    return list(result.scalars().all())
+    return [
+        schemas.RecipeSummary.model_validate(recipe)
+        for recipe in result.scalars().all()
+    ]
 
 
 @router.get(
@@ -68,7 +73,7 @@ async def get_recipe(
     result = await session.execute(
         select(models.Recipe).where(models.Recipe.id == recipe_id)
     )
-    return result.scalar_one()
+    return schemas.RecipeDetail.model_validate(result.scalar_one())
 
 
 @router.post(
@@ -92,4 +97,4 @@ async def create_recipe(
     session.add(recipe)
     await session.commit()
     await session.refresh(recipe)
-    return recipe
+    return schemas.RecipeDetail.model_validate(recipe)

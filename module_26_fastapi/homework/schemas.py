@@ -52,5 +52,7 @@ class RecipeDetail(BaseModel):
     id: int = Field(..., description="Уникальный идентификатор рецепта.")
     title: str = Field(..., description="Название рецепта.")
     cooking_time_minutes: int = Field(..., description="Время приготовления в минутах.")
-    ingredients: list[str] = Field(..., description="Ингредиенты в порядке отображения.")
+    ingredients: list[str] = Field(
+        ..., description="Ингредиенты в порядке отображения."
+    )
     description: str = Field(..., description="Инструкция по приготовлению.")
