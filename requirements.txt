@@ -1,0 +1,6 @@
+afastapi>=0.115,<1.0
+sqlalchemy[asyncio]>=2.0,<3.0
+aiosqlite>=0.20
+uvicorn[standard]>=0.30
+pytest>=8.0
+httpx2
